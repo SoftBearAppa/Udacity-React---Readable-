@@ -1,6 +1,7 @@
 import axois from 'axios';
 
 export const FETCH_CATEGORIES = 'FECTH_CATEGORIES';
+export const FETCH_POSTS = 'FETCH_POSTS';
 const ROOT_URL = 'http://localhost:5001'
 
 let token = localStorage.token;
@@ -21,6 +22,16 @@ export function fetchCategories() {
 
   return {
     type: FETCH_CATEGORIES,
+    payload: request,
+  }
+}
+
+export function fetchPosts() {
+  const request = axois.get(`${ROOT_URL}/posts`,
+  {headers});
+
+  return {
+    type:FETCH_POSTS,
     payload: request,
   }
 }
