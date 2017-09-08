@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
-import {BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import promise from 'redux-promise';
 
 import App from './App';
+import Category from './components/category';
 import reducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -18,7 +19,10 @@ const createStoreWithMiddleware = composeEnhancers(applyMiddleware(promise))(cre
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducer)}>
     <BrowserRouter>
-      <App />
+      <div>
+        <Route exact path='/category/:cats' component={Category} />
+        <Route exact path='/' component={App} />
+      </div>
     </BrowserRouter>
   </Provider>
   , document.getElementById('root'));
