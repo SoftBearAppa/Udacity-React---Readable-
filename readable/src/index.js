@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import promise from 'redux-promise';
+import thunk from 'redux-thunk';
 
 import App from './App';
 import Category from './components/category';
@@ -12,7 +13,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const createStoreWithMiddleware = composeEnhancers(applyMiddleware(promise))(createStore);
+const createStoreWithMiddleware = composeEnhancers(applyMiddleware(promise, thunk))(createStore);
 
 
 
