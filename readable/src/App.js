@@ -4,23 +4,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchCategories, fetchPosts } from './actions';
+import Nav from './components/nav';
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchCategories();
     this.props.fetchPosts();
-  }
-
-  renderCategories = () => {
-    return _.map(this.props.categories, cats => {
-      return (
-        <li key={cats.name}>
-          <Link to={`/category/${cats.name}`} >
-            {cats.name}
-          </Link>
-        </li>
-      );
-    });
   }
 
   renderPosts = () => {
@@ -41,9 +30,7 @@ class App extends Component {
       <div className="App">
         Gettng started on Project: Readable
         <h2>Categories</h2>
-        <ul className='list-group'>
-          {this.renderCategories()}
-        </ul>
+        <Nav />
         <h3>Post Index</h3>
         <ul className='list-group'>
           {this.renderPosts()}
@@ -53,10 +40,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({ categories, posts }) {
   return {
-    categories: state.categories,
-    posts:state.posts,
+    categories,
+    posts,
   }
 }
 
