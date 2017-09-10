@@ -1,6 +1,7 @@
 import axois from 'axios';
 
 export const FETCH_CATEGORIES = 'FECTH_CATEGORIES';
+export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS';
 export const FETCH_POSTS = 'FETCH_POSTS';
 const ROOT_URL = 'http://localhost:5001'
 
@@ -34,4 +35,13 @@ export function fetchPosts() {
     type:FETCH_POSTS,
     payload: request,
   }
+}
+
+export function fetchCategoryPosts(cats) {
+  const request = axois.get(`${ROOT_URL}/${cats}/posts`, {headers});
+
+  return {
+    type:FETCH_CATEGORY_POSTS,
+    payload: request,
+  };
 }
