@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { FETCH_POSTS, FETCH_CATEGORY_POSTS } from '../actions';
+import { FETCH_POSTS, FETCH_CATEGORY_POSTS, FETCH_POST_DETAILS } from '../actions';
 
 export default function (state = {}, action) {
 
@@ -13,6 +13,9 @@ export default function (state = {}, action) {
 
     case FETCH_POSTS:
       return _.mapKeys(payload.data, 'id');
+
+    case FETCH_POST_DETAILS:
+      return payload.data;
 
     default: return state;
   }

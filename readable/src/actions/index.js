@@ -3,6 +3,7 @@ import axois from 'axios';
 export const FETCH_CATEGORIES = 'FECTH_CATEGORIES';
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS';
 export const FETCH_POSTS = 'FETCH_POSTS';
+export const FETCH_POST_DETAILS = 'FETCH_POST_DETAILS';
 const ROOT_URL = 'http://localhost:5001'
 
 let token = localStorage.token;
@@ -44,4 +45,13 @@ export function fetchCategoryPosts(cats) {
     type:FETCH_CATEGORY_POSTS,
     payload: request,
   };
+}
+
+export function fetchPostDetails(postsid) {
+  const request = axois.get(`${ROOT_URL}/posts/${postsid}`, {headers});
+
+  return {
+    type: FETCH_POST_DETAILS,
+    payload: request,
+  }
 }

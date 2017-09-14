@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 
 import App from './App';
 import Category from './components/category';
+import PostDetails from './components/posts_details';
 import reducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -21,6 +22,7 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducer)}>
     <BrowserRouter>
       <div>
+        <Route exact path='/posts/:postsid' component={PostDetails} />
         <Route exact path='/category/:cats' component={Category} />
         <Route exact path='/' component={App} />
       </div>
