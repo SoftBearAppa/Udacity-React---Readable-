@@ -8,7 +8,6 @@ import Nav from './components/nav';
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchCategories();
     this.props.fetchPosts();
   }
 
@@ -47,4 +46,4 @@ function mapStateToProps({ categories, posts }) {
   }
 }
 
-export default connect(mapStateToProps, { fetchCategories, fetchPosts } )(App);
+export default connect(mapStateToProps, { fetchPosts } )(App);

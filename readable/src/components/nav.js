@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { fetchCategories } from '../actions'
+
 class Nav extends Component {
+  componentDidMount() {
+    this.props.fetchCategories();
+  }
 
   renderCategories = () => {
     return _.map(this.props.categories, cats => {
@@ -30,4 +35,4 @@ function mapStateToProps({ categories }) {
   return { categories };
 }
 
-export default connect(mapStateToProps)(Nav)
+export default connect(mapStateToProps, { fetchCategories })(Nav)
