@@ -7,6 +7,7 @@ const rootReducer = combineReducers({
   form: formReducer,
   categories: Categories,
   posts: Posts,
+  form: formReducer,
 });
 
 export default rootReducer;

@@ -1,5 +1,6 @@
 import axois from 'axios';
 
+export const CREATE_POST = 'CREATE_POST';
 export const FETCH_CATEGORIES = 'FECTH_CATEGORIES';
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS';
 export const FETCH_POSTS = 'FETCH_POSTS';
@@ -52,6 +53,15 @@ export function fetchPostDetails(postsid) {
 
   return {
     type: FETCH_POST_DETAILS,
+    payload: request,
+  }
+}
+
+export function createPost(fieldValues) {
+  const request = axois.post(`${ROOT_URL}/posts`, fieldValues, {headers});
+
+  return {
+    type: CREATE_POST,
     payload: request,
   }
 }
