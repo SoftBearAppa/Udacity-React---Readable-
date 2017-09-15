@@ -25,6 +25,7 @@ class Nav extends Component {
   render() {
     return(
       <ul>
+        <Link to='/'>Home</Link>
         {this.renderCategories()}
       </ul>
     );
