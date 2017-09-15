@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchCategoryPosts } from '../actions';
-import Nav from './nav';
 
 class Category extends Component {
   componentDidMount() { 
@@ -27,7 +26,6 @@ class Category extends Component {
   render() {
     return (
       <div>
-        <Nav />
         <h3>Category: {this.props.match.params.cats}</h3>
         <ul>
           {this.renderPosts()}

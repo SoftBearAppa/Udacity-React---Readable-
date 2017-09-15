@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 
 import { fetchCategories, fetchPostDetails } from '../actions';
 
-import Nav from './nav';
-
 class PostDetails extends Component {
   componentDidMount() {
     const { postsid } = this.props.match.params
@@ -23,8 +21,6 @@ class PostDetails extends Component {
         <div>{body}</div>
         <div>{voteScore}</div>
         <div>{moment({timestamp}).format('HH:mm:ss, MMM Do YY')}</div>
-
-        <Nav />
       </div>
     )
   }

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchCategories, fetchPosts } from './actions';
-import Nav from './components/nav';
 
 class App extends Component {
   componentDidMount() {
@@ -29,7 +28,6 @@ class App extends Component {
       <div className="App">
         Gettng started on Project: Readable
         <h2>Categories</h2>
-        <Nav />
         <h3>Post Index</h3>
         <ul className='list-group'>
           {this.renderPosts()}
