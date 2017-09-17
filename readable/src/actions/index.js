@@ -1,8 +1,10 @@
 import axois from 'axios';
 
 export const CREATE_POST = 'CREATE_POST';
+export const EDIT_POST = 'EDIT_POST';
 export const FETCH_CATEGORIES = 'FECTH_CATEGORIES';
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS';
+export const FETCH_ALL_COMMENTS = 'FETCH_ALL_COMMENTS';
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const FETCH_POST_DETAILS = 'FETCH_POST_DETAILS';
 const ROOT_URL = 'http://localhost:5001'
@@ -21,7 +23,7 @@ const headers = {
 
 
 export function fetchCategories() {
-  const request = axois.get(`${ROOT_URL}/categories`,{headers});
+  const request = axois.get(`${ROOT_URL}/categories`, {headers});
 
   return {
     type: FETCH_CATEGORIES,
@@ -62,6 +64,24 @@ export function createPost(fieldValues) {
 
   return {
     type: CREATE_POST,
+    payload: request,
+  }
+}
+
+export function editPost(postsid, fieldValues) {
+  const request = axois.put(`${ROOT_URL}/posts/${postsid}`, fieldValues, {headers});
+
+  return {
+    type:EDIT_POST,
+    payload: request,
+  }
+}
+
+export function fetchComments(postsid) {
+  const request = axois.get(`${ROOT_URL}/posts/${postsid}/comments`, {headers});
+
+  return{
+    type: FETCH_ALL_COMMENTS,
     payload: request,
   }
 }
