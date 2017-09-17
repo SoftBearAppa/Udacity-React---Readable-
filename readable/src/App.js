@@ -27,7 +27,6 @@ class App extends Component {
     return (
       <div className="App">
         Gettng started on Project: Readable
-        <h2>Categories</h2>
         <h3>Post Index</h3>
         <ul className='list-group'>
           {this.renderPosts()}
