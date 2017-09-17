@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 
 
-import { createPost, fetchPostDetails } from '../actions';
+import { createPost, editPost, fetchPostDetails } from '../actions';
 
 class CreatePost extends Component {
   componentDidMount() {
     if (this.props.match.params.postsid) {
-      this.props.fetchPostDetails(this.match.params.postsid);
+      console.log('match found');
+      this.props.fetchPostDetails(this.props.match.params.postsid);
     }
   }
 
@@ -43,16 +44,18 @@ class CreatePost extends Component {
   }
 
   onSubmit = (values) => {
-    console.log(this.props);
+    const {postsid, category } = this.props.match.params;
+    if (postsid) {
+      return this.props.editPost(postsid, values);
+    }
     values['id'] = Math.random().toString(36).substr(-8);
     values['timestamp'] = Date.now();
-    this.props.createPost(values);
+    return this.props.createPost(values);
   }
 
   render() {
-    console.log(this.props);
     const { handleSubmit } = this.props
-    const disabled = this.props.match.params.postId ? true : false
+    const disabled = this.props.match.params.postsid ? true : false
     return(
       <div>
         Testing new form
@@ -69,7 +72,7 @@ class CreatePost extends Component {
             name="author"
             type="input"
             component={this.renderField}
-            onEditDisable={disabled}
+            onEditDisabled={disabled}
           />
           <Field
             label="Content for this Post"
@@ -82,7 +85,7 @@ class CreatePost extends Component {
             name="category"
             type="select"
             component={this.renderField}
-            onEditDisable={disabled}
+            onEditDisabled={disabled}
           />
           <button type="submit">Add a post</button>
           <Link to='/'>Cancel</Link>
@@ -92,8 +95,18 @@ class CreatePost extends Component {
   }
 }
 
+function mapStateToProps({ posts }, ownProps) {
+  const { postsid } = ownProps.match.params;
+  if(postsid) {
+    return{
+      initialValues: posts[postsid]
+    }
+  }
+
+  return {}
+}
 CreatePost = reduxForm({
   form: 'CreatePost',
 })(CreatePost);
 
-export default connect(null, { createPost, fetchPostDetails })(CreatePost);
+export default connect(mapStateToProps, { createPost, editPost, fetchPostDetails })(CreatePost);
