@@ -27,6 +27,7 @@ ReactDOM.render(
         <Nav />
         <Switch>
           <Route exact path='/posts/new' component={CreatePost} />
+          <Route exact path='/posts/edit/:postsid' component={CreatePost} />
           <Route exact path='/posts/:postsid' component= {PostDetails} />
           <Route exact path='/category/:cats' component= {Category} />
           <Route exact path='/' component= {App} />
