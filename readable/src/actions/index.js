@@ -1,4 +1,4 @@
-import axois from 'axios';
+import axios from 'axios';
 
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
@@ -7,6 +7,8 @@ export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS';
 export const FETCH_ALL_COMMENTS = 'FETCH_ALL_COMMENTS';
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const FETCH_POST_DETAILS = 'FETCH_POST_DETAILS';
+export const VOTE_POST = 'VOTE_POST';
+
 const ROOT_URL = 'http://localhost:5001'
 
 let token = localStorage.token;
@@ -23,7 +25,7 @@ const headers = {
 
 
 export function fetchCategories() {
-  const request = axois.get(`${ROOT_URL}/categories`, {headers});
+  const request = axios.get(`${ROOT_URL}/categories`, {headers});
 
   return {
     type: FETCH_CATEGORIES,
@@ -32,7 +34,7 @@ export function fetchCategories() {
 }
 
 export function fetchPosts() {
-  const request = axois.get(`${ROOT_URL}/posts`,
+  const request = axios.get(`${ROOT_URL}/posts`,
   {headers});
 
   return {
@@ -42,7 +44,7 @@ export function fetchPosts() {
 }
 
 export function fetchCategoryPosts(cats) {
-  const request = axois.get(`${ROOT_URL}/${cats}/posts`, {headers});
+  const request = axios.get(`${ROOT_URL}/${cats}/posts`, {headers});
 
   return {
     type:FETCH_CATEGORY_POSTS,
@@ -51,7 +53,7 @@ export function fetchCategoryPosts(cats) {
 }
 
 export function fetchPostDetails(postsid) {
-  const request = axois.get(`${ROOT_URL}/posts/${postsid}`, {headers});
+  const request = axios.get(`${ROOT_URL}/posts/${postsid}`, {headers});
 
   return {
     type: FETCH_POST_DETAILS,
@@ -60,7 +62,7 @@ export function fetchPostDetails(postsid) {
 }
 
 export function createPost(fieldValues) {
-  const request = axois.post(`${ROOT_URL}/posts`, fieldValues, {headers});
+  const request = axios.post(`${ROOT_URL}/posts`, fieldValues, {headers});
 
   return {
     type: CREATE_POST,
@@ -69,7 +71,7 @@ export function createPost(fieldValues) {
 }
 
 export function editPost(postsid, fieldValues) {
-  const request = axois.put(`${ROOT_URL}/posts/${postsid}`, fieldValues, {headers});
+  const request = axios.put(`${ROOT_URL}/posts/${postsid}`, fieldValues, {headers});
 
   return {
     type:EDIT_POST,
@@ -78,10 +80,19 @@ export function editPost(postsid, fieldValues) {
 }
 
 export function fetchComments(postsid) {
-  const request = axois.get(`${ROOT_URL}/posts/${postsid}/comments`, {headers});
+  const request = axios.get(`${ROOT_URL}/posts/${postsid}/comments`, {headers});
 
-  return{
+  return {
     type: FETCH_ALL_COMMENTS,
+    payload: request,
+  }
+}
+
+export function votePost(postsid, option) {
+  const request = axios.post(`${ROOT_URL}/posts/${postsid}`, {option}, {headers});
+
+  return {
+    type: VOTE_POST,
     payload: request,
   }
 }
