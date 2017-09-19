@@ -21,10 +21,10 @@ export default function (state = {}, action) {
       return _.mapKeys(payload.data, 'id');
 
     case FETCH_POST_DETAILS:
-      return payload.data;
+      return {[payload.data.id]:payload.data};
 
     case VOTE_POST:
-      return (payload.data);
+      return {...state, [payload.data.id]:payload.data};
 
 
     default: return state;

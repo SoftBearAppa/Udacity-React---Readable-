@@ -19,13 +19,17 @@ class PostDetails extends Component {
       <div>
         <Link onClick={() => this.props.votePost(postsid, "upVote")} to="#">&#x25B2;</Link>
         Score: {voteScore}
-        <Link onClick={() => this.props.votePost(postsid, "downVote")} to="#">&#x25B2;</Link>        
+        <Link onClick={() => this.props.votePost(postsid, "downVote")} to="#">&#x25BC;</Link>        
       </div>
     )
   }
 
   render() {
-    const { title, body, author, voteScore, timestamp, id } = this.props.posts;
+    const { post } = this.props
+    if (!post) {
+      return <div>loading....</div>
+    }
+    const { title, author, timestamp, body, id, voteScore } = this.props.post;
     return (
       <div>
         <h2>{title}</h2>
@@ -43,9 +47,9 @@ class PostDetails extends Component {
   }
 }
 
-function mapStateToProps({ posts }) {
+function mapStateToProps({ posts }, ownProps) {
   return {
-    posts,
+    post: posts[ownProps.match.params.postsid]
   }
 }
 export default connect(mapStateToProps, { fetchCategories, fetchComments, fetchPostDetails, votePost })(PostDetails);
