@@ -7,6 +7,7 @@ export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS';
 export const FETCH_ALL_COMMENTS = 'FETCH_ALL_COMMENTS';
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const FETCH_POST_DETAILS = 'FETCH_POST_DETAILS';
+export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const VOTE_POST = 'VOTE_POST';
 
 const ROOT_URL = 'http://localhost:5001'
@@ -93,6 +94,15 @@ export function votePost(postsid, option) {
 
   return {
     type: VOTE_POST,
+    payload: request,
+  }
+}
+
+export function voteComment(commentId, option) {
+  const request = axios.post(`${ROOT_URL}/comments/${commentId}`, {option}, {headers});
+
+  return {
+    type: VOTE_COMMENT,
     payload: request,
   }
 }
