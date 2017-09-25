@@ -47,10 +47,11 @@ class CreatePost extends Component {
     const {postsid, category } = this.props.match.params;
     if (postsid) {
       return this.props.editPost(postsid, values);
+    } else {
+      values['id'] = Math.random().toString(36).substr(-8);
+      values['timestamp'] = Date.now();
+      return this.props.createPost(values);
     }
-    values['id'] = Math.random().toString(36).substr(-8);
-    values['timestamp'] = Date.now();
-    return this.props.createPost(values);
   }
 
   render() {
