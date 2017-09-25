@@ -3,10 +3,12 @@ import axios from 'axios';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const FETCH_CATEGORIES = 'FECTH_CATEGORIES';
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS';
 export const FETCH_ALL_COMMENTS = 'FETCH_ALL_COMMENTS';
 export const FETCH_POSTS = 'FETCH_POSTS';
+export const FETCH_COMMENT_DETAILS = 'FETCH_COMMENT_DETAILS';
 export const FETCH_POST_DETAILS = 'FETCH_POST_DETAILS';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const VOTE_POST = 'VOTE_POST';
@@ -63,6 +65,15 @@ export function fetchPostDetails(postsid) {
   }
 }
 
+export function fetchCommentDetails(commentsid) {
+  const request = axios.get(`${ROOT_URL}/comments/${commentsid}`, {headers});
+
+  return {
+    type: FETCH_COMMENT_DETAILS,
+    payload: request,
+  }
+}
+
 export function createPost(fieldValues) {
   const request = axios.post(`${ROOT_URL}/posts`, fieldValues, {headers});
 
@@ -86,6 +97,15 @@ export function editPost(postsid, fieldValues) {
 
   return {
     type:EDIT_POST,
+    payload: request,
+  }
+}
+
+export function editComment(commentsid, fieldValues) {
+  const request = axios.put(`${ROOT_URL}/comments/${commentsid}`, fieldValues, {headers});
+
+  return {
+    type: EDIT_COMMENT,
     payload: request,
   }
 }

@@ -30,6 +30,7 @@ ReactDOM.render(
           <Route exact path='/posts/new' component={CreatePost} />
           <Route exact path='/posts/edit/:postsid' component={CreatePost} />
           <Route exact path='/posts/:postsid/comments/new' component={CreateComment} />
+          <Route exact path='/posts/:postsid/comments/edit/:commentsid' component={CreateComment} />
           <Route exact path='/posts/:postsid' component= {PostDetails} />
           <Route exact path='/category/:cats' component= {Category} />
           <Route exact path='/' component= {App} />

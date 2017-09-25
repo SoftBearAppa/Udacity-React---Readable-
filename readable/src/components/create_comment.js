@@ -5,9 +5,16 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 
-import { createComment } from '../actions';
+import { createComment, editComment, fetchCommentDetails } from '../actions';
 
 class CreateComment extends Component {
+
+  componentDidMount() {
+    if (this.props.match.params.commentsid) {
+      console.log('match found');
+      this.props.fetchCommentDetails(this.props.match.params.commentsid);
+    }
+  }
 
   renderField = (field) => {
     return (
@@ -23,11 +30,15 @@ class CreateComment extends Component {
   }
 
   onSubmit = (values) => {
-    const { postsid } = this.props.match.params;
-    values['parentId'] = postsid;
-    values['id'] = Math.random().toString(36).substr(-8);;
-    values['timestamps'] = Date.now();
-    return this.props.createComment(values);
+    const { postsid, commentsid } = this.props.match.params;
+    values['timestamp'] = Date.now();
+    if(commentsid) {
+      return this.props.editComment(commentsid, values);
+    } else {
+      values['parentId'] = postsid;
+      values['id'] = Math.random().toString(36).substr(-8);;
+      return this.props.createComment(values);
+    }
   }
 
   render() {
@@ -60,4 +71,4 @@ CreateComment = reduxForm({
   form: 'CreateComment',
 })(CreateComment)
 
-export default connect(null, { createComment })(CreateComment);
+export default connect(null, { createComment, fetchCommentDetails, editComment })(CreateComment);
