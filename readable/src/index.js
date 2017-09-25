@@ -10,6 +10,7 @@ import App from './App';
 import Category from './components/category';
 import Nav from './components/nav';
 import PostDetails from './components/posts_details';
+import CreateComment from './components/create_comment';
 import CreatePost from './components/create_post';
 import reducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
@@ -28,6 +29,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path='/posts/new' component={CreatePost} />
           <Route exact path='/posts/edit/:postsid' component={CreatePost} />
+          <Route exact path='/posts/:postsid/comments/new' component={CreateComment} />
           <Route exact path='/posts/:postsid' component= {PostDetails} />
           <Route exact path='/category/:cats' component= {Category} />
           <Route exact path='/' component= {App} />

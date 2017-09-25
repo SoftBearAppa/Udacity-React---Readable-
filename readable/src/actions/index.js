@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const FETCH_CATEGORIES = 'FECTH_CATEGORIES';
@@ -67,6 +68,15 @@ export function createPost(fieldValues) {
 
   return {
     type: CREATE_POST,
+    payload: request,
+  }
+}
+
+export function createComment(fieldValues) {
+  const request = axios.post(`${ROOT_URL}/comments`, fieldValues, {headers});
+
+  return {
+    type: CREATE_COMMENT,
     payload: request,
   }
 }
