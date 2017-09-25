@@ -67,8 +67,17 @@ class CreateComment extends Component {
   }
 }
 
+function mapStateToProps({ comments }, ownProps) {
+  const { commentsid } = ownProps.match.params;
+  if(commentsid) {
+    return {
+      initialValues: comments[commentsid]
+    }
+  }
+}
+
 CreateComment = reduxForm({
   form: 'CreateComment',
 })(CreateComment)
 
-export default connect(null, { createComment, fetchCommentDetails, editComment })(CreateComment);
+export default connect(mapStateToProps, { createComment, fetchCommentDetails, editComment })(CreateComment);
