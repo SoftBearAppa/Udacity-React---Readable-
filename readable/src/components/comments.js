@@ -2,21 +2,35 @@ import _ from 'lodash';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { Link, withRouter } from 'react-router-dom';
 
-import { voteComment } from '../actions';
+import { deleteComment, fetchComments, voteComment } from '../actions';
 
 class Comments extends Component {
+  componentDidMount() {
+    console.log('component did mount.');
+    this.props.fetchComments(this.props.match.params.postsid)
+  }
 
   renderComments = () => {
+    console.log('starting renderComments');
+    console.log(this.props);
     return (
       _.map(this.props.comments, comment => {
+        console.log(comment);
         return (
-          <div key={comment.id}>
+          <div key={comment.id}>  
             <h5>{comment.body}</h5>
             <h6>{moment(comment.timestamp).format('MMM Do YY, HHmm')}</h6>
             <h6>{comment.author}</h6>
             {this.renderVote(comment.id, comment.voteScore)}
+            <br />
+            <Link to={`/posts/:postsid/comments/edit/${comment.id}`} >
+              edit
+            </Link>
+            <br/>
+            <button onClick={() => {console.log(this.props);this.props.deleteComment(this.props.match.params.postsid, comment.id)}}>Delete</button>
           </div>
         )
       })
@@ -34,7 +48,7 @@ class Comments extends Component {
   }
   
   render() {
-    const {comments} = this.props;
+    const { comments } = this.props;
     if(!comments) {
       return <div>Loading Comments...</div>
     }
@@ -47,10 +61,18 @@ class Comments extends Component {
   }
 }
 
-function mapStateToProps({ comments }) {
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    deleteComment, fetchComments, voteComment
+  }, dispatch)
+}
+
+function mapStateToProps({ comments }, ownProps) {
+  console.log(comments);
+  console.log(ownProps);
   return {
-    comments,
+    comments: comments[ownProps.match.params.postsid],
   }
 }
 
-export default connect(mapStateToProps, { voteComment })(Comments);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Comments));

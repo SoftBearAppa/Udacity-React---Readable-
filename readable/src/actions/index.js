@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
@@ -26,7 +27,21 @@ const headers = {
   'Authorization': token,
 }
 
+export function deleteComment(postsid, commentid) {
+  const request = axios.delete(`${ROOT_URL}/comments/${commentid}`, {headers});
 
+  return dispatch => {
+    request.then(() => {
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: {
+          postsid,
+          commentid,
+        }
+      })
+    })
+  }
+}
 
 export function fetchCategories() {
   const request = axios.get(`${ROOT_URL}/categories`, {headers});
@@ -112,10 +127,18 @@ export function editComment(commentsid, fieldValues) {
 
 export function fetchComments(postsid) {
   const request = axios.get(`${ROOT_URL}/posts/${postsid}/comments`, {headers});
-
-  return {
-    type: FETCH_ALL_COMMENTS,
-    payload: request,
+  console.log('sending fetchComments');
+  return dispatch => {
+    request.then(({ data }) => {
+      dispatch({
+        type: FETCH_ALL_COMMENTS,
+        payload: {
+          data,
+          postsid,
+        }
+      })
+      }
+    )
   }
 }
 
