@@ -17,6 +17,10 @@ class App extends Component {
           <Link to={`/posts/${post.id}`} >
             {post.title}
           </Link>
+          <br />
+          <Link to={`/posts/edit/${post.id}`}>
+            Edit
+          </Link>
         </li>
       );
     });
