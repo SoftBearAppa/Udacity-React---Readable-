@@ -4,14 +4,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { fetchCategories, fetchComments, fetchPostDetails, votePost } from '../actions';
+import { fetchCategories, fetchPostDetails, votePost } from '../actions';
 import Comments from './comments';
 
 class PostDetails extends Component {
   componentDidMount() {
     const { postsid } = this.props.match.params
     this.props.fetchPostDetails(postsid);
-    this.props.fetchComments(postsid);
   }
 
   renderVote = (postsid, voteScore) => {
@@ -49,7 +48,7 @@ class PostDetails extends Component {
 
 function mapStateToProps({ posts }, ownProps) {
   return {
-    post: posts[ownProps.match.params.postsid]
+    post: posts[ownProps.match.params.postsid],
   }
 }
-export default connect(mapStateToProps, { fetchCategories, fetchComments, fetchPostDetails, votePost })(PostDetails);
+export default connect(mapStateToProps, { fetchCategories, fetchPostDetails, votePost })(PostDetails);
