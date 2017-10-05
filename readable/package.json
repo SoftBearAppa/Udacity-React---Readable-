@@ -6,6 +6,7 @@
     "moment": "^2.18.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-fontawesome": "^1.6.1",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
