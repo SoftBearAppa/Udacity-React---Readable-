@@ -46,11 +46,11 @@ class CreatePost extends Component {
   onSubmit = (values) => {
     const {postsid, category } = this.props.match.params;
     if (postsid) {
-      return this.props.editPost(postsid, values);
+      return this.props.editPost(postsid, values, () => this.props.history.push(`/posts/${postsid}`));
     } else {
       values['id'] = Math.random().toString(36).substr(-8);
       values['timestamp'] = Date.now();
-      return this.props.createPost(values);
+      return this.props.createPost(values, () => this.props.history.push(`/posts/${values.id}`));
     }
   }
 

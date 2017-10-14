@@ -11,8 +11,7 @@ class CreateComment extends Component {
 
   componentDidMount() {
     if (this.props.match.params.commentsid) {
-      console.log('match found');
-      this.props.fetchCommentDetails(this.props.match.params.commentsid);
+      this.props.fetchCommentDetails(this.props.match.params.postsid, this.props.match.params.commentsid);
     }
   }
 
@@ -33,11 +32,11 @@ class CreateComment extends Component {
     const { postsid, commentsid } = this.props.match.params;
     values['timestamp'] = Date.now();
     if(commentsid) {
-      return this.props.editComment(commentsid, values);
+      return this.props.editComment(postsid, commentsid, values, () => this.props.history.push(`/posts/${postsid}`));
     } else {
       values['parentId'] = postsid;
       values['id'] = Math.random().toString(36).substr(-8);;
-      return this.props.createComment(values);
+      return this.props.createComment(postsid, values, () => this.props.history.push(`/posts/${postsid}`));
     }
   }
 
@@ -68,10 +67,12 @@ class CreateComment extends Component {
 }
 
 function mapStateToProps({ comments }, ownProps) {
-  const { commentsid } = ownProps.match.params;
-  if(commentsid) {
+  const { commentsid, postsid } = ownProps.match.params;
+  if(commentsid && comments[postsid]) {
     return {
-      initialValues: comments[commentsid]
+      initialValues: comments[postsid]
+        .filter(comment => comment.id === commentsid)
+        .reduce((comment, a) => {return a})
     }
   }
 }

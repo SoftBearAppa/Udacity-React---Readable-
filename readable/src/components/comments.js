@@ -1,24 +1,25 @@
 import _ from 'lodash';
+import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import { deleteComment, fetchComments, voteComment } from '../actions';
+import NavOrderTab from './nav_sorts';
+
+import { deleteComment, fetchComments, voteComment, orderByVote, orderByTime } from '../actions';
 
 class Comments extends Component {
   componentDidMount() {
-    console.log('component did mount.');
     this.props.fetchComments(this.props.match.params.postsid)
   }
 
   renderComments = () => {
-    console.log('starting renderComments');
-    console.log(this.props);
+    const { comments, sorts } = this.props;
+    const sort = sorts.order === 'byVotes' ? _.sortBy(comments, (comment) => comment.voteScore) : _.sortBy(comments, (comment) => comment.timestamp)
     return (
-      _.map(this.props.comments, comment => {
-        console.log(comment);
+      _.map(sort, comment => {
         return (
           <div key={comment.id}>  
             <h5>{comment.body}</h5>
@@ -26,11 +27,11 @@ class Comments extends Component {
             <h6>{comment.author}</h6>
             {this.renderVote(comment.id, comment.voteScore)}
             <br />
-            <Link to={`/posts/:postsid/comments/edit/${comment.id}`} >
-              edit
+            <Link to={`/posts/${this.props.match.params.postsid}/comments/edit/${comment.id}`} >
+              <FontAwesome name='pencil-square-o' aria-hidden="true" />
             </Link>
             <br/>
-            <button onClick={() => {console.log(this.props);this.props.deleteComment(this.props.match.params.postsid, comment.id)}}>Delete</button>
+              <FontAwesome name='trash-o' aria-hidden="true" onClick={() => { this.props.deleteComment(this.props.match.params.postsid, comment.id) }}/>
           </div>
         )
       })
@@ -40,9 +41,9 @@ class Comments extends Component {
   renderVote = (commentid, voteScore) => {
     return (
       <div>
-        <Link to='#' onClick={() => this.props.voteComment(commentid, 'upVote')}>&#x25B2;</Link>
+        <Link to='#' onClick={() => this.props.voteComment(this.props.match.params.postsid, commentid, 'upVote')}>&#x25B2;</Link>
       Score: {voteScore}
-      <Link to="#" onClick={() => this.props.voteComment(commentid, "downVote")}>&#x25BC;</Link>
+      <Link to="#" onClick={() => this.props.voteComment(this.props.match.params.postsid, commentid, "downVote")}>&#x25BC;</Link>
       </div>
     )
   }
@@ -55,6 +56,7 @@ class Comments extends Component {
 
     return(
       <div>
+          <NavOrderTab orderByTime={this.props.orderByTime} orderByVotes={this.props.orderByVote} topic='comments'/>
         {this.renderComments()}
       </div>
     )
@@ -63,15 +65,14 @@ class Comments extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    deleteComment, fetchComments, voteComment
+    deleteComment, fetchComments, voteComment, orderByVote, orderByTime
   }, dispatch)
 }
 
-function mapStateToProps({ comments }, ownProps) {
-  console.log(comments);
-  console.log(ownProps);
+function mapStateToProps({ comments, sorts }, ownProps) {
   return {
     comments: comments[ownProps.match.params.postsid],
+    sorts: sorts.comments
   }
 }
 

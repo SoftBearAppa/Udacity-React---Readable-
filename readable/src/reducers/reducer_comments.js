@@ -9,24 +9,29 @@ export default function (state = {}, action) {
   switch (action.type) {
 
     case DELETE_COMMENT:
-    console.log(state[payload.postsid]);
       const filter = state[payload.postsid].filter(comment => comment.id !== payload.commentid);
       return {...state, [payload.postsid]:[...filter]}
 
     case CREATE_COMMENT:
-      return {...state, [payload.data.id]:payload.data};
+      return {...state, [payload.postsid]: {...state[payload.postsid], payload}};
 
     case EDIT_COMMENT:
-      return {...state, [payload.data.id]:payload.data};
+      const postsState = state[payload.data.parentId];
+      const findComment = state[payload.data.parentId].findIndex((comment)=>{return comment.id === payload.data.id});
+      postsState[findComment] = payload.data;
+      return {...state, [payload.postsid]: [...postsState]};
 
     case FETCH_ALL_COMMENTS:
       return {...state, [payload.postsid]: payload.data}
 
     case FETCH_COMMENT_DETAILS:
-      return {[payload.data.id]:payload.data};
+      return {...state, [payload.postsid]: [...state[payload.postsid], payload.data]};
 
     case VOTE_COMMENT:
-      return {...state, [payload.data.id]:payload.data};
+      let newState = state[payload.postsid];
+      let index = state[payload.postsid].findIndex((comment) => {return comment.id === payload.data.id});
+      newState[index] = payload.data;
+      return {...state, [payload.postsid]: [...newState]};
 
     default: return state;
   }

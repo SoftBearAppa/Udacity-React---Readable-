@@ -1,10 +1,11 @@
 import _ from 'lodash';
+import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { fetchCategories, fetchPostDetails, votePost } from '../actions';
+import { deletePost, fetchCategories, fetchPostDetails, votePost } from '../actions';
 import Comments from './comments';
 
 class PostDetails extends Component {
@@ -36,7 +37,13 @@ class PostDetails extends Component {
         <h6>{moment(timestamp).format('MMM Do YY, HH:mm') }</h6>
         <div>{body}</div>
           <div>{this.renderVote(id, voteScore)}</div>
+          <Link to={`/posts/edit/${post.id}`}>
+            <FontAwesome name='pencil-square-o' aria-hidden="true" />
+          </Link>
+          <FontAwesome name='trash-o' aria-hidden="true" onClick={() => this.props.deletePost(this.props.match.params.postsid, () => this.props.history.push('/'))}/>
         <div>
+          <Link to={`/posts/${this.props.match.params.postsid}/comments/new`}><FontAwesome name='commenting' aria-hidden='true'></FontAwesome>
+          </Link>
           <Comments />
         </div>
       </div>
@@ -51,4 +58,4 @@ function mapStateToProps({ posts }, ownProps) {
     post: posts[ownProps.match.params.postsid],
   }
 }
-export default connect(mapStateToProps, { fetchCategories, fetchPostDetails, votePost })(PostDetails);
+export default connect(mapStateToProps, { deletePost, fetchCategories, fetchPostDetails, votePost })(PostDetails);

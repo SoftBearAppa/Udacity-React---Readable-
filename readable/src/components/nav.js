@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import FontAwesome from 'react-fontawesome';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -26,6 +27,8 @@ class Nav extends Component {
     return(
       <ul>
         <Link to='/'>Home</Link>
+        <br />
+        <Link to='/posts/new'><FontAwesome name='plus' aria-hidden='true' ></FontAwesome></Link>
         {this.renderCategories()}
       </ul>
     );

@@ -1,16 +1,18 @@
 import axios from 'axios';
 
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const DELETE_POST = 'DELETE_POST';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const FETCH_CATEGORIES = 'FECTH_CATEGORIES';
-export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS';
 export const FETCH_ALL_COMMENTS = 'FETCH_ALL_COMMENTS';
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const FETCH_COMMENT_DETAILS = 'FETCH_COMMENT_DETAILS';
 export const FETCH_POST_DETAILS = 'FETCH_POST_DETAILS';
+export const ORDER_BY_TIME = 'ORDER_BY_TIME';
+export const ORDER_BY_VOTES = 'ORDER_BY_VOTES';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const VOTE_POST = 'VOTE_POST';
 
@@ -43,6 +45,19 @@ export function deleteComment(postsid, commentid) {
   }
 }
 
+export function deletePost(postsid, callback) {
+  const request = axios.delete(`${ROOT_URL}/posts/${postsid}`, {headers});
+
+  return dispatch => {
+    request.then(() => {
+      dispatch({
+        type: DELETE_POST,
+        payload: postsid,
+      })
+    }).then(() => callback())
+  }
+}
+
 export function fetchCategories() {
   const request = axios.get(`${ROOT_URL}/categories`, {headers});
 
@@ -62,15 +77,6 @@ export function fetchPosts() {
   }
 }
 
-export function fetchCategoryPosts(cats) {
-  const request = axios.get(`${ROOT_URL}/${cats}/posts`, {headers});
-
-  return {
-    type:FETCH_CATEGORY_POSTS,
-    payload: request,
-  };
-}
-
 export function fetchPostDetails(postsid) {
   const request = axios.get(`${ROOT_URL}/posts/${postsid}`, {headers});
 
@@ -80,54 +86,83 @@ export function fetchPostDetails(postsid) {
   }
 }
 
-export function fetchCommentDetails(commentsid) {
+export function fetchCommentDetails(postsid, commentsid) {
   const request = axios.get(`${ROOT_URL}/comments/${commentsid}`, {headers});
 
-  return {
-    type: FETCH_COMMENT_DETAILS,
-    payload: request,
+  return dispatch => {
+    request.then((data) => {
+      dispatch({
+        type: FETCH_COMMENT_DETAILS,
+        payload: {
+          postsid,
+          data
+        }
+      })
+    })
   }
 }
 
-export function createPost(fieldValues) {
+export function createPost(fieldValues, callback) {
   const request = axios.post(`${ROOT_URL}/posts`, fieldValues, {headers});
 
-  return {
-    type: CREATE_POST,
-    payload: request,
+  return dispatch => {
+    request.then(({data}) => {
+      dispatch({
+        type: CREATE_POST,
+        payload: data
+      })
+    }).then(() => callback())
   }
 }
 
-export function createComment(fieldValues) {
+export function createComment(postsid, fieldValues, callback) {
   const request = axios.post(`${ROOT_URL}/comments`, fieldValues, {headers});
 
-  return {
-    type: CREATE_COMMENT,
-    payload: request,
+  return dispatch => {
+    request.then(({data}) => {
+      dispatch({
+        type: CREATE_COMMENT,
+        payload: {
+          postsid,
+          data
+        }
+      })
+    }).then(() => callback())
   }
 }
 
-export function editPost(postsid, fieldValues) {
+export function editPost(postsid, fieldValues, callback) {
   const request = axios.put(`${ROOT_URL}/posts/${postsid}`, fieldValues, {headers});
 
-  return {
-    type:EDIT_POST,
-    payload: request,
+  return dispatch => {
+    request.then(({data}) => {
+      dispatch({
+        type: EDIT_POST,
+        payload:data,
+      })
+    }).then(() => callback())
   }
 }
 
-export function editComment(commentsid, fieldValues) {
+export function editComment(postsid, commentsid, fieldValues, callback) {
   const request = axios.put(`${ROOT_URL}/comments/${commentsid}`, fieldValues, {headers});
-
-  return {
-    type: EDIT_COMMENT,
-    payload: request,
+  fieldValues['timestamp'] = Date.now();
+  return dispatch => {
+    request.then(({data}) => {
+      dispatch({
+        type: EDIT_COMMENT,
+        payload: {
+          postsid,
+          data
+        }
+      })
+    }).then(() => callback())
   }
 }
 
 export function fetchComments(postsid) {
   const request = axios.get(`${ROOT_URL}/posts/${postsid}/comments`, {headers});
-  console.log('sending fetchComments');
+
   return dispatch => {
     request.then(({ data }) => {
       dispatch({
@@ -151,11 +186,34 @@ export function votePost(postsid, option) {
   }
 }
 
-export function voteComment(commentId, option) {
+export function voteComment(postsid, commentId, option) {
   const request = axios.post(`${ROOT_URL}/comments/${commentId}`, {option}, {headers});
 
+  return dispatch => {
+    request.then(({data}) => {
+      dispatch({
+        type: VOTE_COMMENT,
+        payload: {
+          data,
+          postsid
+        }
+      })
+    })
+  }
+}
+
+export function orderByVote(topic, order="byVotes") {
   return {
-    type: VOTE_COMMENT,
-    payload: request,
+    type: ORDER_BY_VOTES,
+    topic,
+    order,
+  }
+}
+
+export function orderByTime(topic, order="byTime") {
+  return {
+    type: ORDER_BY_TIME,
+    topic,
+    order,
   }
 }
