@@ -1,0 +1,86 @@
+li
+  list-style: none;
+
+ul, li, p, a, span, h1, h2, h3, h4, h5, div
+  padding: 0;
+  margin: 0;
+
+body
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+
+  #root
+    width: 100vw
+    height: 100vh
+
+.nav
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  margin-left: 25%
+  height: 50px;
+
+  .nav-options
+    width: 100%;
+    height: 100%
+    display: flex;
+    flex-direction: row;
+
+    li
+      margin: auto;
+
+    .nav-add-post-wrapper
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 50px
+      display: flex;
+      flex-direction: row;
+      margin-right: 25px;
+
+      & :hover
+.App
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .sort-tab
+    display: flex;
+    flex-direction:  row;
+    padding: 15px 0px;
+
+    h5
+      margin: 0 15px 0 25px;
+
+    ul
+      flex-direction: row;
+      display: flex;
+
+      li
+        margin: 0 15px;
+
+  .index
+    margin-left: 25px;
+
+  .list-group
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 25px 25px 0;
+
+    li
+      display: flex;
+      flex-direction: row;
+      align-items: center
+      margin: 0 0 10px
+
+      &:nth-child(odd)
+        background: rgb(230,230,231)
+
+      div
+        margin-right: auto
+
+        &.post-edit
+          margin: 0

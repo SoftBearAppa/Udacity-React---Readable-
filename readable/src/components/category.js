@@ -26,13 +26,14 @@ class Category extends Component {
   
   render() {
     return (
-      <div>
-        <h3>Category: {this.props.match.params.cats}</h3>
-        <NavOrderTab orderByTime={this.props.orderByTime} orderByVotes={this.props.orderByVote} topic='posts'/>
-        <ul>
+      <div className='App'>
+        <div className='sort-tab'>
+          <h5>Sort by:</h5> <NavOrderTab orderByTime={this.props.orderByTime} orderByVotes={this.props.orderByVote} topic='posts' />
+        </div>
+        <h3 className='index'>Category: {this.props.match.params.cats}</h3>
+        <ul className='list-group'>
           {this.renderPosts()}
         </ul>
-        
       </div>
     );
   }

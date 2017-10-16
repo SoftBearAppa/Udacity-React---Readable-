@@ -3,6 +3,7 @@ import FontAwesome from 'react-fontawesome';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import './styling/main.css';
 
 import NavOrderTab from './components/nav_sorts';
 
@@ -20,13 +21,16 @@ class App extends Component {
       if (post.deleted === false) {
         return (
           <li key={post.id}>
-            <Link to={`/posts/${post.id}`} >
+            <div className='post-title'>
+              <Link to={`/posts/${post.id}`} >
               {post.title}
-            </Link>
-            <br />
-            <Link to={`/posts/edit/${post.id}`}>
-              <FontAwesome name='pencil-square-o' aria-hidden="true" />
-            </Link>
+              </Link>
+            </div>
+            <div className='post-edit'>
+              <Link to={`/posts/edit/${post.id}`}>
+                <FontAwesome name='pencil-square-o' aria-hidden="true" />
+              </Link>
+            </div>
           </li>
         );
       }
@@ -37,8 +41,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavOrderTab orderByTime={this.props.orderByTime} orderByVotes={this.props.orderByVote} topic='posts' />
-        <h3>Post Index</h3>
+        <div className='sort-tab'>
+          <h5>Sort by:</h5> <NavOrderTab orderByTime={this.props.orderByTime} orderByVotes={this.props.orderByVote} topic='posts' />
+        </div>
+        <h3 className='index'>Post Index</h3>
         <ul className='list-group'>
           {this.renderPosts()}
         </ul>

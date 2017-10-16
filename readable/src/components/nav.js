@@ -25,11 +25,16 @@ class Nav extends Component {
 
   render() {
     return(
-      <ul>
-        <Link to='/'>Home</Link>
-        <br />
-        <Link to='/posts/new'><FontAwesome name='plus' aria-hidden='true' ></FontAwesome></Link>
-        {this.renderCategories()}
+      <ul className='nav'>
+        <div className='nav-options'>
+          <li key='nav-home' ><Link className='nav-home' to='/'>Home</Link></li>
+          <div className='nav-add-post-wrapper'>
+            <li className='add-post' key='nav-add-post'><Link
+          to='/posts/new'><FontAwesome name='plus' aria-hidden='true' ></FontAwesome></Link>
+            </li>
+          </div>
+          {this.renderCategories()}
+        </div>
       </ul>
     );
   }
