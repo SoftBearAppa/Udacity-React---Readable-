@@ -31,21 +31,37 @@ class PostDetails extends Component {
     }
     const { title, author, timestamp, body, id, voteScore } = this.props.post;
     return (
-      <div>
-        <h2>{title}</h2>
-        <h5>{author}</h5>
-        <h6>{moment(timestamp).format('MMM Do YY, HH:mm') }</h6>
-        <div>{body}</div>
-          <div>{this.renderVote(id, voteScore)}</div>
-          <Link to={`/posts/edit/${post.id}`}>
-            <FontAwesome name='pencil-square-o' aria-hidden="true" />
-          </Link>
-          <FontAwesome name='trash-o' aria-hidden="true" onClick={() => this.props.deletePost(this.props.match.params.postsid, () => this.props.history.push('/'))}/>
-        <div>
-          <Link to={`/posts/${this.props.match.params.postsid}/comments/new`}><FontAwesome name='commenting' aria-hidden='true'></FontAwesome>
-          </Link>
-          <Comments />
+      <div className='App'>
+        <div className='post'>
+          <div className='post-details'>
+            <h2>{title}</h2>
+            <h5>Author: {author}</h5>
+            <h6>
+              {moment(timestamp).format('MMM Do YY, HH:mm')}
+            </h6>
+            <hr/>
+            <div className='post-body'>
+              {body}
+            </div>
+          </div>
+            <div className='post-options'>
+              <div className='post-score'>
+                {this.renderVote(id, voteScore)}
+              </div>
+              <div className='post-edits'>
+                <Link to={`/posts/edit/${post.id}`}>
+                  <FontAwesome name='pencil-square-o' aria-hidden="true" />
+                </Link>
+                <Link to={`/posts/${this.props.match.params.postsid}/comments/new`}><FontAwesome name='commenting' aria-hidden='true'></FontAwesome>
+                </Link>
+                <FontAwesome name='trash-o' aria-hidden="true" onClick={() => this.props.deletePost(this.props.match.params.postsid, () => this.props.history.push('/'))} />
+              </div>
+            </div>
+            <div className='divider'>
+              <hr/>
+            </div>
         </div>
+          <Comments />
       </div>
 
 

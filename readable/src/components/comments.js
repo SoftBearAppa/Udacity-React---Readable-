@@ -21,17 +21,30 @@ class Comments extends Component {
     return (
       _.map(sort, comment => {
         return (
-          <div key={comment.id}>  
-            <h5>{comment.body}</h5>
-            <h6>{moment(comment.timestamp).format('MMM Do YY, HHmm')}</h6>
-            <h6>{comment.author}</h6>
-            {this.renderVote(comment.id, comment.voteScore)}
-            <br />
-            <Link to={`/posts/${this.props.match.params.postsid}/comments/edit/${comment.id}`} >
-              <FontAwesome name='pencil-square-o' aria-hidden="true" />
-            </Link>
-            <br/>
-              <FontAwesome name='trash-o' aria-hidden="true" onClick={() => { this.props.deleteComment(this.props.match.params.postsid, comment.id) }}/>
+          <div className='comment' key={comment.id}>
+            <div className='comment-details'>
+              <h4>
+                {comment.body}
+              </h4>
+              <h5>
+                Author: {comment.author}
+              </h5>
+              <h5>
+                {moment(comment.timestamp).format('MMM Do YY, HH:mm')}
+              </h5>
+            </div>
+            <div className='comment-options'>
+              {this.renderVote(comment.id, comment.voteScore)}
+              <div className='comment-edits'>
+                <Link to={`/posts/${this.props.match.params.postsid}/comments/edit/${comment.id}`} >
+                  <FontAwesome name='pencil-square-o' aria-hidden="true" />
+                </Link>
+                <FontAwesome name='trash-o' aria-hidden="true" onClick={() => { this.props.deleteComment(this.props.match.params.postsid, comment.id) }}/>
+              </div>
+              </div>
+              <div className='divider'>
+                <hr />
+              </div>
           </div>
         )
       })
@@ -40,7 +53,7 @@ class Comments extends Component {
 
   renderVote = (commentid, voteScore) => {
     return (
-      <div>
+      <div className='comment-score'>
         <Link to='#' onClick={() => this.props.voteComment(this.props.match.params.postsid, commentid, 'upVote')}>&#x25B2;</Link>
       Score: {voteScore}
       <Link to="#" onClick={() => this.props.voteComment(this.props.match.params.postsid, commentid, "downVote")}>&#x25BC;</Link>
@@ -55,8 +68,13 @@ class Comments extends Component {
     }
 
     return(
-      <div>
-          <NavOrderTab orderByTime={this.props.orderByTime} orderByVotes={this.props.orderByVote} topic='comments'/>
+      <div className='comments'>
+        <div className='sort-tab'>
+          <h5>Sort by:</h5> <NavOrderTab orderByTime={this.props.orderByTime} orderByVotes={this.props.orderByVote} topic='comments' />
+        </div>
+        <div className='divider'>
+          <hr/>
+        </div>
         {this.renderComments()}
       </div>
     )

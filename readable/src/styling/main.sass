@@ -1,7 +1,7 @@
 li
   list-style: none;
 
-ul, li, p, a, span, h1, h2, h3, h4, h5, div
+ul, li, p, a, span, h1, h2, h3, h4, h5, h6, div
   padding: 0;
   margin: 0;
 
@@ -9,6 +9,8 @@ body
   margin: 0;
   width: 100vw;
   height: 100vh;
+  overflow: auto
+  overflow-x: hidden
 
   #root
     width: 100vw
@@ -73,14 +75,92 @@ body
     li
       display: flex;
       flex-direction: row;
-      align-items: center
-      margin: 0 0 10px
+      align-items: center;
+      margin: 0 0 10px;
 
       &:nth-child(odd)
-        background: rgb(230,230,231)
+        background: rgb(230,230,231);
 
       div
-        margin-right: auto
+        margin-right: auto;
 
         &.post-edit
-          margin: 0
+          margin: 0;
+
+  .post
+    margin-top: 15px;
+    margin-left: 25px
+    display: flex;
+    flex-direction: column;
+    background: rgba(200,200,201, .3);
+
+    hr
+      margin: 4px 25px 0 0;
+
+    .post-details
+
+      h2
+        margin-bottom: 5px;
+
+      h5
+        margin-bottom: 4px;
+      
+      h6
+        margin-bottom: 10px;
+
+      .post-body
+        margin: 15px 0;
+
+    .post-options
+      display: flex;
+      flex-direction: row;
+
+      .post-score
+        margin-bottom: 15px;
+        background: rgb(220,220,231);
+        border-radius: 4px;
+        margin-right: auto;
+
+      .post-edits
+        margin-right: 25px;
+
+        a
+          margin-right: 15px;
+
+  .comments
+    margin-left: 25px;
+    display: flex;
+    flex-direction: column;
+
+    hr
+      margin: 4px 25px 0 0;
+
+    .sort-tab
+      margin-left: -25px;
+
+    .comment
+      display: flex;
+      flex-direction: column;
+
+      h4
+        margin: 5px 0;
+      
+      h5
+        margin: 4px 0
+
+      .comment-options
+        display: flex
+        flex-direction: row
+
+        .comment-score
+          margin-top: 4px
+          margin-bottom: 8px;
+          background: rgb(220,220,231);
+          border-radius: 4px;
+          margin-right: auto;
+
+        .comment-edits
+          margin-right: 25px;
+
+          a
+            margin-right: 15px;
