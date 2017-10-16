@@ -58,39 +58,43 @@ class CreatePost extends Component {
     const { handleSubmit } = this.props
     const disabled = this.props.match.params.postsid ? true : false
     return(
-      <div>
-        Testing new form
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <Field
-            label="Title"
-            name="title"
-            type="input"
-            component={this.renderField}
+      <div className='App'>
+        <div className='form'>
+          <h2>Create Post</h2>
+          <form onSubmit={handleSubmit(this.onSubmit)}>
+            <Field
+              label="Title: "
+              name="title"
+              type="input"
+              component={this.renderField}
 
-          />
-          <Field
-            label="Author"
-            name="author"
-            type="input"
-            component={this.renderField}
-            onEditDisabled={disabled}
-          />
-          <Field
-            label="Content for this Post"
-            name="body"
-            type="textarea"
-            component={this.renderField}
-          />
-          <Field
-            label="Select a category for this Post"
-            name="category"
-            type="select"
-            component={this.renderField}
-            onEditDisabled={disabled}
-          />
-          <button type="submit">Add a post</button>
-          <Link to='/'>Cancel</Link>
-        </form>
+            />
+            <Field
+              label="Author: "
+              name="author"
+              type="input"
+              component={this.renderField}
+              onEditDisabled={disabled}
+            />
+            <Field
+              label="Content for this Post: " 
+              name="body"
+              type="textarea"
+              component={this.renderField}
+            />
+            <Field
+              label="Select a category for this Post"
+              name="category"
+              type="select"
+              component={this.renderField}
+              onEditDisabled={disabled}
+            />
+            <div className='buttons'>
+              <button type="submit">Add a post</button>
+              <Link to='/'>Cancel</Link>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

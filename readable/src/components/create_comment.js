@@ -43,24 +43,28 @@ class CreateComment extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <div>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          Test
-          <Field 
-            label='Author'
-            name='author'
-            type='input'
-            component={this.renderField}
-          />
-          <Field
-            label='Comment'
-            name='body'
-            type='textarea'
-            component={this.renderField}
-          />
-          <button type="submit">Add a post</button>
-          <Link to='/'>Cancel</Link>
-        </form>
+      <div className='App'>
+        <div className='form'>
+          <h2>Create Comment</h2>
+          <form onSubmit={handleSubmit(this.onSubmit)}>
+            <Field 
+              label='Author'
+              name='author'
+              type='input'
+              component={this.renderField}
+            />
+            <Field
+              label='Comment'
+              name='body'
+              type='textarea'
+              component={this.renderField}
+            />
+            <div className='buttons'>
+              <button type="submit">Add a post</button>
+              <Link to='/'>Cancel</Link>
+            </div>
+          </form>
+        </div>
       </div>
     )
   }
