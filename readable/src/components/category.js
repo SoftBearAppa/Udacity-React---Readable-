@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import FontAwesome from 'react-fontawesome';
+import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -16,9 +18,20 @@ class Category extends Component {
     return _.map(this.props.posts, post => {
       return (
         <li key={post.id}>
-          <Link to={`/posts/${post.id}`} >
-            {post.title}
-          </Link>
+          <div className='post-title'>
+            <Link to={`/posts/${post.id}`} >
+              {post.title}
+            </Link>
+          </div>
+          <div className='post-details'>
+            <p>Score: {post.voteScore}</p>
+            <p>Date: {moment(post.timestamp).format('MMM Do YY, HH:mm')}</p>
+          </div>
+          <div className='post-edit'>
+            <Link to={`/posts/edit/${post.id}`}>
+              <FontAwesome name='pencil-square-o' aria-hidden="true" />
+            </Link>
+          </div>
         </li>
       );
     });
