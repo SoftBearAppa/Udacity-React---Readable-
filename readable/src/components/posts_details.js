@@ -27,7 +27,11 @@ class PostDetails extends Component {
   render() {
     const { post } = this.props
     if (!post) {
-      return <div>loading....</div>
+      return <div className='App'>
+                <div className='no-post'>
+                  <h3>404 Post not Found</h3>
+                </div>
+              </div>
     }
     const { title, author, timestamp, body, id, voteScore } = this.props.post;
     return (
