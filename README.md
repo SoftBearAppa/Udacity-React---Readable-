@@ -1,6 +1,6 @@
 # Readable API Server
 
-This server is used in conjunction with the '[Readable App]' (https://github.com/SoftBearFeet/Udacity-React---Readable-/tree/master/readable)
+This server is used in conjunction with the [Readable App](https://github.com/SoftBearFeet/Udacity-React---Readable-/tree/master/readable)
 
 Click the link to view documentation for the [Readable API Server](https://github.com/SoftBearFeet/Udacity-React---Readable-/tree/master/readable)
 
