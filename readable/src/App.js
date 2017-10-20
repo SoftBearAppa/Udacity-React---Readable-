@@ -8,11 +8,21 @@ import './styling/main.css';
 
 import NavOrderTab from './components/nav_sorts';
 
-import { fetchPosts, orderByVote, orderByTime } from './actions';
+import { fetchPosts, orderByVote, orderByTime, votePost } from './actions';
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchPosts();
+  }
+
+  renderVote = (postsid, voteScore) => {
+    return (
+      <div className='post-vote'>
+        <Link onClick={() => this.props.votePost(postsid, "upVote")} to="#">&#x25B2;</Link>
+        Score: {voteScore}
+        <Link onClick={() => this.props.votePost(postsid, "downVote")} to="#">&#x25BC;</Link>
+      </div>
+    )
   }
 
   renderPosts = () => {
@@ -28,7 +38,8 @@ class App extends Component {
               </Link>
             </div>
             <div className='post-details'>
-              <p>Score: {post.voteScore}</p>
+              {this.renderVote(post.id, post.voteScore)}
+              <p>Comments: {_.size(this.props.comments[post.id])}</p>
               <p>Date: {moment(post.timestamp).format('MMM Do YY, HH:mm')}</p>
             </div>
             <div className='post-edit'>
@@ -58,12 +69,13 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ categories, posts, sorts }) {
+function mapStateToProps({ categories, posts, sorts, comments }) {
   return {
     categories,
     posts,
+    comments,
     sorts: sorts.posts
   }
 }
 
-export default connect(mapStateToProps, { fetchPosts, orderByVote, orderByTime } )(App);
+export default connect(mapStateToProps, { fetchPosts, orderByVote, orderByTime, votePost } )(App);

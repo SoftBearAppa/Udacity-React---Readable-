@@ -6,15 +6,24 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import NavOrderTab from './nav_sorts';
 
-import { fetchCategoryPosts, fetchPosts, orderByVote, orderByTime } from '../actions';
+import { fetchCategoryPosts, fetchPosts, orderByVote, orderByTime, votePost } from '../actions';
 
 class Category extends Component {
   componentDidMount() { 
     this.props.fetchPosts();
   }
 
+  renderVote = (postsid, voteScore) => {
+    return (
+      <div className='post-vote'>
+        <Link onClick={() => this.props.votePost(postsid, "upVote")} to="#">&#x25B2;</Link>
+        Score: {voteScore}
+        <Link onClick={() => this.props.votePost(postsid, "downVote")} to="#">&#x25BC;</Link>
+      </div>
+    )
+  }
+
   renderPosts = () => {
-    
     return _.map(this.props.posts, post => {
       return (
         <li key={post.id}>
@@ -24,7 +33,8 @@ class Category extends Component {
             </Link>
           </div>
           <div className='post-details'>
-            <p>Score: {post.voteScore}</p>
+            {this.renderVote(post.id, post.voteScore)}
+            <p>Comments: {_.size(this.props.comments[post.id])}</p>
             <p>Date: {moment(post.timestamp).format('MMM Do YY, HH:mm')}</p>
           </div>
           <div className='post-edit'>
@@ -52,10 +62,11 @@ class Category extends Component {
   }
 }
 
-function mapStateToProps({ posts }, ownProps) {
+function mapStateToProps({ posts, comments }, ownProps) {
   return {
     posts: _.omitBy(posts, (post) => post.category !== ownProps.match.params.cats),
+    comments,
   }
 }
 
-export default connect(mapStateToProps, { fetchPosts, orderByVote, orderByTime })(Category);
+export default connect(mapStateToProps, { fetchPosts, orderByVote, orderByTime, votePost })(Category);

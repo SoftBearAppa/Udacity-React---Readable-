@@ -71,9 +71,16 @@ export function fetchPosts() {
   const request = axios.get(`${ROOT_URL}/posts`,
   {headers});
 
-  return {
-    type:FETCH_POSTS,
-    payload: request,
+  return dispatch => {
+    request.then(({data}) => {
+      dispatch ({
+        type: FETCH_POSTS,
+        payload: data,
+      })
+      data.map(post => {
+        dispatch(fetchComments(post.id))
+      })
+    })
   }
 }
 

@@ -18,7 +18,7 @@ export default function (state = {}, action) {
       return {...state, [payload.id]: payload};
 
     case FETCH_POSTS:
-      return _.mapKeys(payload.data, 'id');
+      return _.mapKeys(payload, 'id');
 
     case FETCH_POST_DETAILS:
       return {[payload.data.id]:payload.data};
