@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import NavOrderTab from './nav_sorts';
 
-import { fetchCategoryPosts, fetchPosts, orderByVote, orderByTime, votePost } from '../actions';
+import { fetchCategoryPosts, fetchPosts, orderByVote, orderByTime, votePost, deletePost } from '../actions';
 
 class Category extends Component {
   componentDidMount() { 
@@ -41,6 +41,7 @@ class Category extends Component {
             <Link to={`/posts/edit/${post.id}`}>
               <FontAwesome name='pencil-square-o' aria-hidden="true" />
             </Link>
+            <FontAwesome name='trash-o' aria-hidden="true" onClick={() => this.props.deletePost(post.id, () => this.props.history.push('/'))} />
           </div>
         </li>
       );
@@ -69,4 +70,4 @@ function mapStateToProps({ posts, comments }, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, { fetchPosts, orderByVote, orderByTime, votePost })(Category);
+export default connect(mapStateToProps, { fetchPosts, orderByVote, orderByTime, votePost, deletePost })(Category);

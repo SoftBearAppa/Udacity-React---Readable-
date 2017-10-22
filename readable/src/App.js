@@ -8,7 +8,7 @@ import './styling/main.css';
 
 import NavOrderTab from './components/nav_sorts';
 
-import { fetchPosts, orderByVote, orderByTime, votePost } from './actions';
+import { fetchPosts, orderByVote, orderByTime, votePost, deletePost } from './actions';
 
 class App extends Component {
   componentDidMount() {
@@ -46,6 +46,7 @@ class App extends Component {
               <Link to={`/posts/edit/${post.id}`}>
                 <FontAwesome name='pencil-square-o' aria-hidden="true" />
               </Link>
+              <FontAwesome name='trash-o' aria-hidden="true" onClick={() => this.props.deletePost(post.id, () => this.props.history.push('/'))} />
             </div>
           </li>
         );
@@ -78,4 +79,4 @@ function mapStateToProps({ categories, posts, sorts, comments }) {
   }
 }
 
-export default connect(mapStateToProps, { fetchPosts, orderByVote, orderByTime, votePost } )(App);
+export default connect(mapStateToProps, { fetchPosts, orderByVote, orderByTime, votePost, deletePost } )(App);
